@@ -1,7 +1,7 @@
 #pragma once
 #include <fcntl.h>
 #include <limits.h>
-#include <malloc.h>
+#include <malloc/malloc.h>
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
@@ -48,11 +48,11 @@ int mx_get_char_index(const char *str, char c);
 char *mx_strdup(const char *s1);
 char *mx_strndup(const char *s1, size_t n);
 char *mx_strcpy(char *dst, const char *src);
-char *strncpy(char *dst, const char *src, int len);
+char *mx_strncpy(char *dst, const char *src, int len);
 int mx_strcmp(const char *s1, const char *s2);
 int mx_strncmp(const char *s1, const char *s2, int n);
-char *strcat(char *restrict s1, const char *restrict s2);
-char *strncat(char *s1, const char *s2, size_t n);
+char *mx_strcat(char *restrict s1, const char *restrict s2);
+char *mx_strncat(char *s1, const char *s2, size_t n);
 char *mx_strstr(const char *haystack, const char *needle);
 int mx_get_substr_index(const char *str, const char *sub);
 int mx_count_substr(const char *str, const char *sub);
@@ -68,13 +68,11 @@ int mx_read_line(char **lineptr, size_t buf_size, char delim, const int fd);
 
 void *mx_memset(void *b, int c, size_t len);
 void *mx_memcpy(void *restrict dst, const void *restrict src, size_t n);
-void *mx_memccpy(void *restrict dst, const void *restrict src,
-        int c, size_t n);
+void *mx_memccpy(void *restrict dst, const void *restrict src, int c, size_t n);
 int mx_memcmp(const void *s1, const void *s2, size_t n);
 void *mx_memchr(const void *s, int c, size_t n);
 void *mx_memrchr(const void *s, int c, size_t n);
-void *mx_memmem(const void *big, size_t big_len, const void *little,
-        size_t little_len);
+void *mx_memmem(const void *big, size_t big_len, const void *little, size_t little_len);
 void *mx_memmove(void *dst, const void *src, size_t len);
 void *mx_realloc(void *ptr, size_t size);
 
