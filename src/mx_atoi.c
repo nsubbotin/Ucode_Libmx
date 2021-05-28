@@ -1,11 +1,17 @@
 #include "libmx.h"
 
 int mx_atoi(const char *str) {
-    int res = 0;
-    int i = 1;
-    int j = 0;
-    while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\r' || str[i] == '\v' || str[i] == '\f')
-        i++;
+    int res;
+    int i;
+    int j;
+
+    res = 0;
+    i = 1;
+    j = 0;
+
+    while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' ||
+                    str[i] == '\r' || str[i] == '\v' || str[i] == '\f')
+            i++;
     if (str[i] == '-' || str[i] == '+') {
         if (str[i] == '-')
             i = -1;
@@ -15,5 +21,5 @@ int mx_atoi(const char *str) {
         res = res * 10 + str[i] - '0';
         i++;
     }
-    return ((int)(res * i));
+    return ((int)(res * i));	
 }

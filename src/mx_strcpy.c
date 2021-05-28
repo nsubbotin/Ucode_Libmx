@@ -1,19 +1,10 @@
 #include "libmx.h"
 
-char *mx_strcpy(char *dst, const char *src){
-    char *s = dst;
-    while (*src)
-        *dst++ = *src++;
-    *dst = 0;
-    return s;
-}
+char *mx_strcpy(char *dst, const char *src) {
+    int i;
 
-/*
-int main(){
-    char src = "luck";
-    char dst[12];
-    mx_strcpy(dst, src);
-    printf("%s\n, dst");
-    printf("%d\n", mx_strlen(dst));
+    for (i = 0; src[i] != '\0'; i++)
+        dst[i] = src[i];
+    dst[i] = '\0';
+    return dst;
 }
-*/

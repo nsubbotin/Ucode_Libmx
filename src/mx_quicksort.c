@@ -1,57 +1,32 @@
 #include "libmx.h"
 
-static void mx_swap_str(char **s1, char **s2) {
-    if (s1 == s2)
-        return;
-    char *tmp = *s1;
-    *s1 = *s2;
-    *s2 = tmp;
-}
-
-
-static bool strcmp373(const char *str1, const char *str2) {
-    int sum1 = 0;
-    int sum2 = 0;
-
-    for (; *str1; str1++, str2++) {
-        sum1 += *str1;
-        sum2 += *str2;
-    }
-    return sum1 > sum2;
-}
-
-
-static int count_move(char **arr, int *left, int *right, int *pos) {
-    int res = 0;
-    if (*pos == *right)
-        --(*right);
-    if (*pos == *left)
-        ++(*left);
-    else {
-        ++res;
-        mx_swap_str(&arr[*pos], &arr[*left]);
-    }
-    if (*left < *right)
-        res += mx_quicksort(arr, *left, *right);
-    return res;
-}
-
+static void sort(char **arr, int i, int j, int *count) {
+	char *tmp = 0;
+	tmp = arr[j];
+	arr[j] = arr[i];
+	arr[i] = tmp;
+	(*count)++;
+ }
 
 int mx_quicksort(char **arr, int left, int right) {
-    if (!arr)
-        return -1;
-    int len = mx_strlen(arr[left]);
-    int pos = left;
-    for (int beg = left, end = right; beg < end; --end) {
-        if (len > mx_strlen(arr[end]) || (len == mx_strlen(arr[end]) && srtcmp373(arr[left], arr[end]))) {
-            pos = end;
-            for (++beg; beg < end; ++beg) {
-                if (len < mx_strlen(arr[beg]) || (len == mx_strlen(arr[beg]) && strcmp373(arr[beg], arr[left]))) {
-                    pos = beg;
-                    break;
-                }
-            }
-        }
-    }
-    return count_move(arr, &left, &right, &pos);
+	int middle = (left + right) / 2;
+	int i = left;
+	int j = right;
+	int count = 0;
+
+	if (!arr)
+		return -1;
+	if (i < j) {
+		while (mx_strlen(arr[i]) < mx_strlen(arr[middle]))
+			i++;
+		while (mx_strlen(arr[i]) > mx_strlen(arr[middle]))
+			j--;
+		if (mx_strlen(arr[i]) != mx_strlen(arr[j]))
+			sort(arr, i, j, &count);
+		if (++i < right)
+			count += mx_quicksort(arr, i, right);
+		if (--j > left)
+			count += mx_quicksort(arr, left, j);
+	}
+	return count;
 }

@@ -1,36 +1,21 @@
 #include "libmx.h"
 
-int mx_strcmp(const char*, const char*);
-int mx_binary_search(char **array, int size, const char *s, int *c) {
-    int f = 0;
-    int l = size - 1;
-    int m = (f + l) / 2;
+int mx_binary_search(char **arr, int size, const char *s, int *count) {
+    int lower = 0;
+    int upper = size - 1;
+    int mid = 0;
+    int res = -1;
 
-    while (f <= l) {
-        *c = *c + 1;
-        if (mx_strcmp(array[m], s) < 0)
-            f = m + 1;
-        else if (mx_strcmp(array[m], s) == 0)
-            return m;
+    while (lower <= upper) {
+        (*count)++;
+        mid = (upper +lower) / 2;
+        if (mx_strcmp(arr[mid], s) == 0)
+            return mid;
+        if (mx_strcmp(arr[mid], s) < 0)
+            lower = mid + 1;
         else
-            l = m - 1;
-        m = (f + l)/2;
+            upper = mid - 1;
     }
-    *c = 0;
-    return -1;
+    (*count) = 0;
+    return res;
 }
-
-/*
-int main(){
-    char *arr[] = {"222", "Abcd", "aBc", "ab", "az", "z"};
-    int c= 0;
-    printf("%d\n", mx_binary_search(arr, 6, "ab", &c));
-    printf("%d\n", c);
-    c= 0;
-    printf("%d\n", mx_binary_search(arr, 6, "aBc", &c));
-    printf("%d\n", c);
-    c= 0;
-    printf("%d\n", mx_binary_search(arr, 6, "aBz", &c));
-    printf("%d\n", c);
-}
-*/

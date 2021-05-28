@@ -1,30 +1,25 @@
 #include "libmx.h"
 
-static void finish(char *tmp, char *str) {
-    for (; *tmp; tmp++) {
-        if (mx_isspace(*tmp)) {
-            *str++ = 32;
-            while (mx_isspace(*(tmp +1)))
-                tmp++;
-        }
-        else
-            *str++ = *tmp;
+char *mx_strnew(const int);
+bool mx_isspace(int);
+int mx_strlen(const char*);
+void mx_strdel(char**);
+char *mx_strtrim(const char*);
+char *mx_del_extra_spaces(const char *str){
+    char *t = mx_strtrim(str);
+    int c = 0;
+    for (int i = 1; i < mx_strlen(t); i++){
+        if (mx_isspace(t[i]) && mx_isspace(t[i - 1]))
+            c++;
     }
-}
-
-char *mx_del_extra_spaces(const char *str) {
-    int spaces = 0;
-    char *tmp;
-    char *res;
-    if (!(tmp = mx_strtrim(str)))
-        return 0;
-    for (int i = 0; tmp[i]; ++i)
-        if (mx_isspace(tmp[i]))
-            for (; mx_isspace(tmp[i + 1]); ++i)
-                spaces++;
-    if (!(res = mx_strnew(mx_strlen(tmp) - spaces +1)))
-        return 0;
-    finish(tmp, res);
-    mx_strdel(&tmp);
-    return res;
+    char *r = mx_strnew(mx_strlen(t) - c);
+    c = 1;
+    r[0] = t[0];
+    for (int i = 1; i < mx_strlen(t); i++){
+        if (!mx_isspace(t[i]) || !mx_isspace(t[i - 1])){
+            r[c] = t[i];
+            c++;
+        }
+    }
+    return r;
 }
