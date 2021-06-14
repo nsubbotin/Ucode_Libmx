@@ -1,7 +1,6 @@
 #include "libmx.h"
 
-static int mx_wordcount(const char *s, char c)
-{
+static int mx_wordcount(const char *s, char c) {
 	int i;
 	int count;
 

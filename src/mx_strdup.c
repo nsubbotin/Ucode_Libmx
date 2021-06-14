@@ -5,4 +5,3 @@ char *mx_strdup(const char *s1) {
     mx_strcpy(duplicate, s1);
     return duplicate;
 }
-
